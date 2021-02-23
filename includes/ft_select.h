@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:57:04 by helvi             #+#    #+#             */
-/*   Updated: 2021/02/22 12:18:09 by helvi            ###   ########.fr       */
+/*   Updated: 2021/02/23 15:12:58 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "ft_printf.h"
 # include "libft.h"
 # include "ft_exit.h"
+# include "ft_error.h"
 # include <termios.h>
 # include <sys/ioctl.h>
 
