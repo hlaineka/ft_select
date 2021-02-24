@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 13:02:36 by helvi             #+#    #+#             */
-/*   Updated: 2021/02/23 15:36:29 by helvi            ###   ########.fr       */
+/*   Updated: 2021/02/24 12:22:24 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,6 +280,7 @@ extern int			g_ft_errno;
 
 char	*ft_strerror(int errnum);
 void	ft_perror(const char *message);
-void	ft_error_lite(int status, int errnum, char *prog_name);
+void	ft_error(int status, int errnum, char *prog_name,
+		const char *format, ...);
 
 #endif

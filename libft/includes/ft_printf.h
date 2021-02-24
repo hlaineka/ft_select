@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hlaineka <hlaineka@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/16 12:23:22 by hlaineka          #+#    #+#             */
-/*   Updated: 2020/12/01 16:50:01 by hlaineka         ###   ########.fr       */
+/*   Updated: 2021/02/24 12:33:19 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct	s_tags
 */
 
 int				ft_printf(const char *format, ...);
+int				printer(const char *format, va_list *source);
 
 /*
 ** Helper functions to set command values

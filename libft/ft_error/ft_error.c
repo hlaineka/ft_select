@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 12:14:06 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/23 15:36:52 by helvi            ###   ########.fr       */
+/*   Updated: 2021/02/24 12:42:28 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ char	*ft_strerror(int errnum)
 {
 	if (errnum == 0)
 		errnum = g_ft_errno;
-	return(g_errstrs[errnum]);
+	return (g_errstrs[errnum]);
 }
 
 void	ft_perror(const char *message)
@@ -172,12 +172,17 @@ void	ft_perror(const char *message)
 	ft_printf("%r\r\n", g_errstrs[g_ft_errno]);
 }
 
-void	ft_error_lite(int status, int errnum, char *prog_name)
+void	ft_error(int status, int errnum, char *prog_name,
+		const char *format, ...)
 {
+	va_list source;
+
+	va_start(source, format);
 	if (prog_name && prog_name[0] != '\0')
 		ft_printf("%r%s: ", prog_name);
 	if (errnum)
 		ft_printf("%r%s: ", g_errstrs[g_ft_errno]);
+	printer(format, &source);
 	ft_printf("%r\r\n");
 	if (status)
 		ft_exit(status);

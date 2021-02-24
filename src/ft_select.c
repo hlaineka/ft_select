@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:22 by helvi             #+#    #+#             */
-/*   Updated: 2021/02/23 15:44:17 by helvi            ###   ########.fr       */
+/*   Updated: 2021/02/24 12:48:02 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@
 ** BRKINT turned on, causing SIGINT signal to be sent to program
 ** INPCK enables parity checking, does not really apply to modern terminals?
 ** ISTRIP causes the 8th bit of each input byte to be stripped
-** CS8 bit mask with multiple bits, sets character size to 8 bit per byte.\
+** CS8 bit mask with multiple bits, sets character size to 8 bit per byte.
 ** raw.c_cc[VMIN] = 0;
 ** raw.c_cc[VTIME] = 1
 ** these two can be used to set a timeout for read() so that it will not wait
 ** for input indefinately.
 */
 
-int		enable_rawmode()
+int		enable_rawmode(void)
 {
 	struct termios	raw;
 
@@ -51,7 +51,7 @@ int		enable_rawmode()
 	return (1);
 }
 
-int		disable_rawmode()
+int		disable_rawmode(void)
 {
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, g_original_termios) == -1)
 		die("tcsetattr");
@@ -77,5 +77,5 @@ int		main(void)
 		ft_printf("%i ", i);
 	}
 	ft_exit(0);
-	return (0);	
+	return (0);
 }
