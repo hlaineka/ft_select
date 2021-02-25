@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 11:58:27 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/15 19:50:01 by helvi            ###   ########.fr       */
+/*   Updated: 2021/02/24 15:56:48 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <string.h>
 # include <stdint.h>
 # include "ft_printf.h"
+# include "ft_exit.h"
+# include "error.h"
+# include "lists.h"
 # define T_INT_MAX 2147483647
 # define T_INT_MIN -2147483648
 # define BUFF_SIZE 8
@@ -100,17 +103,7 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 t_list				*ft_lstsrc(const void *content, t_list *beginning);
 void				ft_lstnewtoend(const void *content, size_t content_size,
 					t_list **beginning);
-t_list				*ft_lstend(t_list *beginning);
 void				ft_lstaddafter(t_list *end, t_list *newelem);
-void				ft_lst_merge_sort(t_list **first, int (*f)(t_list *elem_a,
-					t_list *elem_b));
-void				ft_lst_split(t_list *first, t_list **a, t_list **b);
-int					ft_lst_length(t_list *first);
-t_list				*ft_lst_sorted_merge(t_list *a, t_list *b,
-					int (*f)(t_list *elem_a, t_list *elem_b));
-t_list				*ft_lst_reverse(t_list **first);
-void				ft_lstaddtoend(const void *content, size_t content_size,
-					t_list **beginning);
 
 /*
 ** Own adds.

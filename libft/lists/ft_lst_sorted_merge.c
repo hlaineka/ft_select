@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_split.c                                     :+:      :+:    :+:   */
+/*   ft_lst_sorted_merge.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/18 10:43:21 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/19 11:29:04 by helvi            ###   ########.fr       */
+/*   Created: 2020/06/18 10:42:55 by hlaineka          #+#    #+#             */
+/*   Updated: 2021/02/24 15:48:37 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lists.h"
 
-void	ft_lst_split(t_list *first, t_list **a, t_list **b)
+t_list	*ft_lst_sorted_merge(t_list *a, t_list *b, int (*f)(t_list *elem_a,
+		t_list *elem_b))
 {
-	int		i;
-	int		w;
 	t_list	*temp;
 
-	*a = first;
-	*b = NULL;
-	if (!first || !first->next)
-		return ;
-	w = ft_lst_length(first) / 2;
-	temp = *a;
-	i = 1;
-	while (i < w && temp && temp->next)
+	temp = NULL;
+	if (a == NULL)
+		return (b);
+	else if (b == NULL)
+		return (a);
+	if (f(a, b))
 	{
-		temp = temp->next;
-		i++;
+		temp = a;
+		temp->next = ft_lst_sorted_merge(a->next, b, f);
 	}
-	*b = temp->next;
-	temp->next = NULL;
+	else
+	{
+		temp = b;
+		temp->next = ft_lst_sorted_merge(a, b->next, f);
+	}
+	return (temp);
 }

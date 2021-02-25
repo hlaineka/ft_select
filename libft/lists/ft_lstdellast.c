@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstend.c                                        :+:      :+:    :+:   */
+/*   ft_lstdellast.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/16 20:11:01 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/19 11:29:35 by helvi            ###   ########.fr       */
+/*   Created: 2020/09/16 20:28:08 by hlaineka          #+#    #+#             */
+/*   Updated: 2021/02/24 15:49:34 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lists.h"
 
-/*
-** Finds the last element of the list.
-*/
-
-t_list	*ft_lstend(t_list *beginning)
+void	ft_lstdellast(t_list **first)
 {
 	t_list	*temp;
+	t_list	*last;
 
-	temp = beginning;
-	while (temp != NULL && temp->next != NULL)
-		temp = temp->next;
-	return (temp);
+	temp = NULL;
+	last = first;
+	while (last != NULL && last->next != NULL)
+	{
+		temp = last;
+		last = last->next;
+	}
 }

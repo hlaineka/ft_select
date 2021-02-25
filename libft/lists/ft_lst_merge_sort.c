@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_length.c                                    :+:      :+:    :+:   */
+/*   ft_lst_merge_sort.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/16 20:18:14 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/19 11:28:42 by helvi            ###   ########.fr       */
+/*   Created: 2020/06/18 10:42:51 by hlaineka          #+#    #+#             */
+/*   Updated: 2021/02/24 15:48:03 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lists.h"
 
-int	ft_lst_length(t_list *first)
+void	ft_lst_merge_sort(t_list **first, int (*f)(t_list *elem_a,
+		t_list *elem_b))
 {
-	int	i;
+	t_list	*a;
+	t_list	*b;
 
-	i = 0;
-	while (first)
-	{
-		i++;
-		first = first->next;
-	}
-	return (i);
+	a = NULL;
+	b = NULL;
+	if (!first || !first[0] || !first[0]->next)
+		return ;
+	ft_lst_split(*first, &a, &b);
+	ft_lst_merge_sort(&a, f);
+	ft_lst_merge_sort(&b, f);
+	*first = ft_lst_sorted_merge(a, b, f);
 }

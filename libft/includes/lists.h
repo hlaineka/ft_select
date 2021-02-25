@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_sorted_merge.c                              :+:      :+:    :+:   */
+/*   lists.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/18 10:42:55 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/19 11:28:56 by helvi            ###   ########.fr       */
+/*   Created: 2021/02/24 15:44:13 by helvi             #+#    #+#             */
+/*   Updated: 2021/02/24 15:57:58 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_LISTS_H
+# define FT_LISTS_H
 
+# include "libft.h"
+
+int		ft_lst_length(t_list *first);
+void	ft_lst_merge_sort(t_list **first, int (*f)(t_list *elem_a,
+		t_list *elem_b));
+t_list	*ft_lst_reverse(t_list **first);
 t_list	*ft_lst_sorted_merge(t_list *a, t_list *b, int (*f)(t_list *elem_a,
-		t_list *elem_b))
-{
-	t_list	*temp;
+		t_list *elem_b));
+void	ft_lst_split(t_list *first, t_list **a, t_list **b);
+void	ft_lstaddtoend(const void *content, size_t content_size,
+		t_list **beginning);
+void	ft_lstdellast(t_list **first);
+t_list	*ft_lstend(t_list *beginning);
 
-	temp = NULL;
-	if (a == NULL)
-		return (b);
-	else if (b == NULL)
-		return (a);
-	if (f(a, b))
-	{
-		temp = a;
-		temp->next = ft_lst_sorted_merge(a->next, b, f);
-	}
-	else
-	{
-		temp = b;
-		temp->next = ft_lst_sorted_merge(a, b->next, f);
-	}
-	return (temp);
-}
+#endif

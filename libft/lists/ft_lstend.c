@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_array_length.c                                  :+:      :+:    :+:   */
+/*   ft_lstend.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/27 09:46:29 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/19 11:26:56 by helvi            ###   ########.fr       */
+/*   Created: 2020/09/16 20:11:01 by hlaineka          #+#    #+#             */
+/*   Updated: 2021/02/24 15:55:47 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lists.h"
 
-int	ft_array_length(char **array)
+/*
+** Finds the last element of the list.
+*/
+
+t_list	*ft_lstend(t_list *beginning)
 {
-	int	i;
+	t_list	*temp;
 
-	i = 0;
-	while (array && array[i])
-		i++;
-	return (i);
+	temp = beginning;
+	while (temp != NULL && temp->next != NULL)
+		temp = temp->next;
+	return (temp);
 }

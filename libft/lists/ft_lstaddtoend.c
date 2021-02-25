@@ -6,11 +6,11 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/24 16:35:53 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/19 11:29:15 by helvi            ###   ########.fr       */
+/*   Updated: 2021/02/24 15:49:14 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lists.h"
 
 /*
 ** Adds given content to the end of the list.

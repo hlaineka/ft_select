@@ -6,11 +6,11 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/01 16:18:09 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/19 11:28:52 by helvi            ###   ########.fr       */
+/*   Updated: 2021/02/24 15:48:11 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lists.h"
 
 t_list	*ft_lst_reverse(t_list **first)
 {

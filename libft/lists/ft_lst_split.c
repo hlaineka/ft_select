@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdellast.c                                    :+:      :+:    :+:   */
+/*   ft_lst_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/16 20:28:08 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/19 11:29:25 by helvi            ###   ########.fr       */
+/*   Created: 2020/06/18 10:43:21 by hlaineka          #+#    #+#             */
+/*   Updated: 2021/02/24 15:48:57 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "lists.h"
 
-void	ft_lstdellast(t_list **first)
+void	ft_lst_split(t_list *first, t_list **a, t_list **b)
 {
+	int		i;
+	int		w;
 	t_list	*temp;
-	t_list	*last;
 
-	temp = NULL;
-	last = first;
-	while (last != NULL && last->next != NULL)
+	*a = first;
+	*b = NULL;
+	if (!first || !first->next)
+		return ;
+	w = ft_lst_length(first) / 2;
+	temp = *a;
+	i = 1;
+	while (i < w && temp && temp->next)
 	{
-		temp = last;
-		last = last->next;
+		temp = temp->next;
+		i++;
 	}
+	*b = temp->next;
+	temp->next = NULL;
 }
