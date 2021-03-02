@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:22 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/02 09:22:13 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/02 15:32:26 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_option	*create_list(char **argv)
 void		selector(t_terminal *info, char **argv)
 {
 	t_option	*first;
-	int			c;
 
 	if (!info)
 		return;
@@ -53,12 +52,8 @@ void		selector(t_terminal *info, char **argv)
 	print_selections(info, first);
 	while (true)
 	{
-		c = read_char(info);
-		if (c == 27)
-		{
-			disable_rawmode(info);
-			ft_exit(0);
-		}
+		if (1 == handle_char(info, &first))
+			print_selections(info, first);
 	}
 }
 

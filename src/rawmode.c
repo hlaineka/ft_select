@@ -6,9 +6,11 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:27:50 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/01 21:37:29 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/02 21:23:48 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+int g_fd_out;
 
 #include "ft_select.h"
 char	PC;
@@ -47,13 +49,42 @@ void	start_termcaps(t_terminal *info, char **envp)
 		die("Terminal type $TERM not defined");
 	}
 	info->cm_string = tgetstr("cm", NULL);
+	info->cl_string = tgetstr("cl", NULL);
+	info->cd_string = tgetstr("cd", NULL);
 	info->ti_string = tgetstr("ti", NULL);
 	info->te_string = tgetstr("te", NULL);
 	info->sc_string = tgetstr("sc", NULL);
+	info->rc_string = tgetstr("rc", NULL);
 	info->us_string = tgetstr("us", NULL);
 	info->me_string = tgetstr("me", NULL);
 	info->mr_string = tgetstr("mr", NULL);
 	set_globals();
+	tputs(info->sc_string, 1, &ft_putc);
+}
+
+//char		*check_utmp()
+//{
+//	char	*returnable;
+
+//	returnable = NULL;
+//	if ()
+//}
+
+void		check_tty(t_terminal *info)
+{
+	if (!isatty(1))
+	{
+		info->fd_out = open(ttyname(ttyslot()), O_RDWR);
+		g_fd_out = info->fd_out;
+	}
+	else
+		info->fd_out = 1;
+	if (!isatty(0))
+	{
+		info->fd_in = open(ttyname(ttyslot()), O_RDWR);
+	}
+	else
+		info->fd_in = 1;
 }
 
 /*
@@ -78,22 +109,21 @@ void	start_termcaps(t_terminal *info, char **envp)
 
 int		enable_rawmode(t_terminal *info, char **envp)
 {
-	struct termios	raw;
-	
+	check_tty(info);
 	if (NULL == (info->original_termios = (struct termios*)malloc(sizeof(
 		struct termios))))
 		die("malloc");
+	if (NULL == (info->termios = (struct termios*)malloc(sizeof(
+		struct termios))))
+		die("malloc");
 	if (tcgetattr(STDIN_FILENO, info->original_termios) == -1 ||
-		tcgetattr(STDIN_FILENO, &raw) == -1)
-	{
-		disable_rawmode(info);
+		tcgetattr(STDIN_FILENO, info->termios) == -1)
 		die("tcgetattr");
-	}
-	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
-	raw.c_iflag &= ~(BRKINT | INPCK | ISTRIP | IXON | ICRNL);
-	raw.c_oflag &= ~(OPOST);
-	raw.c_cflag |= (CS8);
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
+	info->termios->c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+	info->termios->c_iflag &= ~(BRKINT | INPCK | ISTRIP | IXON | ICRNL);
+	info->termios->c_oflag &= ~(OPOST);
+	info->termios->c_cflag |= (CS8);
+	if (tcsetattr(info->fd_out, TCSAFLUSH, info->termios) == -1)
 	{
 		disable_rawmode(info);
 		die("tcsetattr");
@@ -107,7 +137,7 @@ int		enable_rawmode(t_terminal *info, char **envp)
 int		disable_rawmode(t_terminal *info)
 {
 	tputs(info->te_string, info->screenrows, &ft_putc);
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, info->original_termios) == -1)
+	if (tcsetattr(info->fd_out, TCSAFLUSH, info->original_termios) == -1)
 		die("tcsetattr");
 	return (1);
 }
@@ -120,18 +150,19 @@ void		check_window_size(t_terminal *info)
 {
 	struct winsize	window_size;
 
-	ioctl(STDOUT_FILENO, TIOCGWINSZ, &window_size);
+	ioctl(info->fd_out, TIOCGWINSZ, &window_size);
 	info->screenrows = window_size.ws_row;
 	info->screencols = window_size.ws_col;
 }
 
 
 /*
-** Function to clear the screen before options are printed
+** Function to clear the screen before options are printed. The cursor
+** location was saved when the program started, and now we use it as the
+** starting location.
 */
 
 void	ft_clear_screen(t_terminal *info)
 {
 	tputs(info->cl_string, info->screenrows, &ft_putc);
-	tputs(tgoto(info->cm_string, 0, 0), info->screenrows, &ft_putc);
 }

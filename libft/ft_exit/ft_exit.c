@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 11:38:45 by helvi             #+#    #+#             */
-/*   Updated: 2021/02/24 12:42:54 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/02 21:10:37 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ int					ft_exit(int return_value)
 
 void				die(const char *s)
 {
-	ft_perror(s);
+	ft_putstr_fd(s, 2);
 	ft_exit(1);
 }

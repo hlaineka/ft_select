@@ -6,14 +6,15 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 18:53:39 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/01 18:55:28 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/02 21:17:43 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+extern int g_fd_out;
 
 int		ft_putc(int c)
 {
-	write(1, &c, 1);
+	write(g_fd_out, &c, 1);
 	return (1);
 }
