@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdellast.c                                    :+:      :+:    :+:   */
+/*   stringarrays.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/16 20:28:08 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/25 14:09:48 by helvi            ###   ########.fr       */
+/*   Created: 2021/02/25 12:12:22 by helvi             #+#    #+#             */
+/*   Updated: 2021/02/25 12:15:03 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lists.h"
+#ifndef FT_STRINGARRAYS_H
+# define FT_STRINGARRAYS_H
 
-/*
-** Well this doesn't actually do anything...
-*/
+# include "libft.h"
 
-void	ft_lstdellast(t_list **first)
-{
-	t_list	*last;
+char				**ft_addstr(char **dest, char *src);
+int					ft_array_length(char **array);
+char				**ft_strarr_add(char **arr, char *str);
+char				**ft_strarr_addfront(char **arr, char *str);
+char				**ft_strarr_copy(char **src);
+void				ft_strarray_free(char **strarr);
 
-	last = *first;
-	while (last != NULL && last->next != NULL)
-	{
-		last = last->next;
-	}
-}
+#endif

@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/22 13:02:36 by helvi             #+#    #+#             */
-/*   Updated: 2021/02/24 12:22:24 by helvi            ###   ########.fr       */
+/*   Updated: 2021/02/26 14:37:59 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,10 +277,10 @@
 # define EMEDIUMTYPE     124
 
 extern int			g_ft_errno;
+extern char			*g_program_name;
 
 char	*ft_strerror(int errnum);
 void	ft_perror(const char *message);
-void	ft_error(int status, int errnum, char *prog_name,
-		const char *format, ...);
+void	ft_error(int status, int errnum, const char *format, ...);
 
 #endif

@@ -1,0 +1,137 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rawmode.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/25 16:27:50 by helvi             #+#    #+#             */
+/*   Updated: 2021/03/01 21:37:29 by helvi            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_select.h"
+char	PC;
+char	*BC;
+char	*UP;
+
+void	set_globals(void)
+{
+	char	*temp;
+
+	temp = tgetstr ("pc", NULL);
+  	PC = temp ? *temp : 0;
+  	BC = tgetstr ("le", NULL);
+  	UP = tgetstr ("up", NULL);
+}
+
+void	start_termcaps(t_terminal *info, char **envp)
+{
+	char		*term_type;
+	int			success;
+
+	if (NULL == (term_type = ft_getenv(envp, "TERM")))
+	{
+		disable_rawmode(info);
+		die("Terminal type not specified in $TERM");
+	}
+	success = tgetent (info->term_buffer, term_type);
+  	if (success < 0)
+	{
+		disable_rawmode(info);
+		die("Could not access the termcap data base.");
+	}
+  	if (success == 0)
+	{
+		disable_rawmode(info);
+		die("Terminal type $TERM not defined");
+	}
+	info->cm_string = tgetstr("cm", NULL);
+	info->ti_string = tgetstr("ti", NULL);
+	info->te_string = tgetstr("te", NULL);
+	info->sc_string = tgetstr("sc", NULL);
+	info->us_string = tgetstr("us", NULL);
+	info->me_string = tgetstr("me", NULL);
+	info->mr_string = tgetstr("mr", NULL);
+	set_globals();
+}
+
+/*
+** ECHO disables automatic printing of a character
+** ICANON starts canonical mode that allows to read one char at a time
+** ISIG surpresses ctrl-C and ctrl-Z, those need to be handled separately now
+** IXON surpresses ctrl-S and ctrl-Q, those need to be handled separately now
+** IEXTEN surpresses ctrl-V, it needs to be handled separately now
+** ICRNL surpresses ctrl-M, that reads as a 10 or newline, making ctrl-J read
+** as 13
+** OPOST turns off output prosessing. Now we need to replace every '\n'
+** with "\r\n"
+** BRKINT turned on, causing SIGINT signal to be sent to program
+** INPCK enables parity checking, does not really apply to modern terminals?
+** ISTRIP causes the 8th bit of each input byte to be stripped
+** CS8 bit mask with multiple bits, sets character size to 8 bit per byte.
+** raw.c_cc[VMIN] = 0;
+** raw.c_cc[VTIME] = 1
+** these two can be used to set a timeout for read() so that it will not wait
+** for input indefinately.
+*/
+
+int		enable_rawmode(t_terminal *info, char **envp)
+{
+	struct termios	raw;
+	
+	if (NULL == (info->original_termios = (struct termios*)malloc(sizeof(
+		struct termios))))
+		die("malloc");
+	if (tcgetattr(STDIN_FILENO, info->original_termios) == -1 ||
+		tcgetattr(STDIN_FILENO, &raw) == -1)
+	{
+		disable_rawmode(info);
+		die("tcgetattr");
+	}
+	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+	raw.c_iflag &= ~(BRKINT | INPCK | ISTRIP | IXON | ICRNL);
+	raw.c_oflag &= ~(OPOST);
+	raw.c_cflag |= (CS8);
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
+	{
+		disable_rawmode(info);
+		die("tcsetattr");
+	}
+	start_termcaps(info, envp);
+	tputs(info->ti_string, info->screenrows, &ft_putc);
+	tputs(tgoto(info->cm_string, 0, 0), info->screenrows, &ft_putc);
+	return (1);
+}
+
+int		disable_rawmode(t_terminal *info)
+{
+	tputs(info->te_string, info->screenrows, &ft_putc);
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, info->original_termios) == -1)
+		die("tcsetattr");
+	return (1);
+}
+
+/*
+** Checks and saves to info structure the size of the window.
+*/
+
+void		check_window_size(t_terminal *info)
+{
+	struct winsize	window_size;
+
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &window_size);
+	info->screenrows = window_size.ws_row;
+	info->screencols = window_size.ws_col;
+}
+
+
+/*
+** Function to clear the screen before options are printed
+*/
+
+void	ft_clear_screen(t_terminal *info)
+{
+	tputs(info->cl_string, info->screenrows, &ft_putc);
+	tputs(tgoto(info->cm_string, 0, 0), info->screenrows, &ft_putc);
+}

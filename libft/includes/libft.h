@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 11:58:27 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/24 15:56:48 by helvi            ###   ########.fr       */
+/*   Updated: 2021/02/25 12:40:18 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,6 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdint.h>
-# include "ft_printf.h"
-# include "ft_exit.h"
-# include "error.h"
-# include "lists.h"
 # define T_INT_MAX 2147483647
 # define T_INT_MIN -2147483648
 # define BUFF_SIZE 8
@@ -35,17 +31,21 @@ typedef struct		s_list
 
 }					t_list;
 
+# include "ft_printf.h"
+# include "ft_exit.h"
+# include "error.h"
+# include "lists.h"
+# include "misc.h"
+# include "strings.h"
+# include "stringarrays.h"
+
 /*
 ** Basic functions
 */
 void				ft_putchar(char c);
-void				ft_putchar_fd(char c, int fd);
 void				ft_putstr(char const *s);
-void				ft_putstr_fd(char const *s, int fd);
 void				ft_putnbr(int n);
-void				ft_putnbr_fd(int n, int fd);
 void				ft_putendl(char const *s);
-void				ft_putendl_fd(char const *s, int fd);
 size_t				ft_strlen(char const *s);
 char				*ft_itoa(int n);
 char				*ft_strdup(const char *s);
@@ -108,52 +108,11 @@ void				ft_lstaddafter(t_list *end, t_list *newelem);
 /*
 ** Own adds.
 */
-int					get_next_line(const int fd, char **line);
-char				*ft_dynamic_string(char **dest, char *src, int num);
-char				**ft_addstr(char **dest, char *src);
+
 int					ft_define_length(int n);
-int					ft_is_whitespace(const char c);
-char				*ft_str_realloc(char *src, int start, int end);
 char				*ft_strset(char value, size_t num);
-void				ft_strpaste(char *dest, char *src);
-char				*ft_strjoin_frees2(char *s1, char *s2);
-char				*ft_strjoin_frees1(char *s1, char *s2);
-void				ft_strpaste_digits(char *dest, char *src);
-char				*ft_char_str_join(char c, char *s1);
-char				*ft_strsub_freestr(char *s, unsigned int start, size_t len);
-void				ft_strpaste_end(char *dest, char *src);
-char				*ft_str_char_join(char c, char *s1);
-char				ft_strlast(char const *str);
-void				print_error_and_exit(char *name);
-void				print_error(char *directory_name);
-char				*ft_strjoin3(char *str1, char *str2, char *str3);
 char				*ft_strnchr(const char *src, int c);
 int					ft_iscntrl(int c);
-char				*ft_getenv(char **envp_pointer, char *name);
-int					ft_str_find_c(const char *src, int c);
-char				*ft_str_toupper(char *str);
-char				**ft_strarr_copy(char **src);
-void				ft_free(void *variable);
-int					ft_array_length(char **array);
-void				ft_strarray_free(char **strarr);
-char				*ft_replc(char *src, int i, char *input);
-char				**ft_strarr_add(char **arr, char *str);
-char				**ft_strarr_addfront(char **arr, char *str);
-char				*ft_strsub_mid(const char *s, unsigned int start,
-					size_t end);
-int					ft_str_rfind_c(const char *src, int c);
-void				ft_str_deli(char **str, int i);
-char				*ft_str_addi(const char *str, int i, char c);
-int					ft_strstri(const char *str1, const char *str2);
-char				*ft_strstr_remove(char *str1, char *str2);
 
-/*
-** Different itoa functions to handle different data types
-*/
-int					ft_define_base_length(long long int n, int base);
-char				*ft_itoa_base(long long int n, long long int base);
-char				*ft_itoa_uint(uintmax_t n, unsigned int	base);
-char				*ft_itoa_hexa(uintmax_t n);
-char				*ft_itoa_float(long double n);
 
 #endif

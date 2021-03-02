@@ -5,19 +5,24 @@
 #                                                     +:+ +:+         +:+      #
 #    By: helvi <helvi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/02/22 11:40:36 by helvi             #+#    #+#              #
-#    Updated: 2021/02/25 12:44:25 by helvi            ###   ########.fr        #
+#    Created: 2021/02/25 12:15:31 by helvi             #+#    #+#              #
+#    Updated: 2021/02/25 14:06:21 by helvi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-NAME = libftexit.a
+NAME = libftstrigarrays.a
 
-_SRC = ft_exit.c
+_SRC = 	ft_addstr.c \
+		ft_array_length.c \
+		ft_strarr_add.c \
+		ft_strarr_addfront.c \
+		ft_strarr_copy.c \
+		ft_strarray_free.c
 
 _OBJ = $(_SRC:.c=.o)
-_INC = ft_exit.h
+_INC = stringarrays.h
 
 SRC_DIR = .
 OBJ_DIR = ../objs
@@ -35,7 +40,7 @@ DEBUG_FLAGS = -Wall -Wextra -Werror -g -I $(INC_DIR) $(INC_LIBFT)
 all: $(OBJ_DIR) $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "\n"ft_exit objects done."\n"
+	@echo "\n"libft stringarray objects done."\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
 	@printf "|"

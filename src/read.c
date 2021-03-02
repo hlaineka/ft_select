@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstdellast.c                                    :+:      :+:    :+:   */
+/*   read.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/09/16 20:28:08 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/25 14:09:48 by helvi            ###   ########.fr       */
+/*   Created: 2021/03/01 12:20:01 by helvi             #+#    #+#             */
+/*   Updated: 2021/03/02 09:23:24 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lists.h"
+#include "ft_select.h"
 
-/*
-** Well this doesn't actually do anything...
-*/
-
-void	ft_lstdellast(t_list **first)
+int			process_keypress(t_terminal *info)
 {
-	t_list	*last;
+	
+}
 
-	last = *first;
-	while (last != NULL && last->next != NULL)
-	{
-		last = last->next;
-	}
+int			read_char(t_terminal *info)
+{
+	char	c;
+	int		returnable;
+
+	read(STDIN_FILENO, &c, 1);
+	returnable = process_keypress(info);
+	return (returnable);
 }

@@ -5,19 +5,28 @@
 #                                                     +:+ +:+         +:+      #
 #    By: helvi <helvi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/02/22 11:40:36 by helvi             #+#    #+#              #
-#    Updated: 2021/02/25 12:44:25 by helvi            ###   ########.fr        #
+#    Created: 2021/02/25 12:29:38 by helvi             #+#    #+#              #
+#    Updated: 2021/02/25 14:06:26 by helvi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-NAME = libftexit.a
+NAME = libftmisc.a
 
-_SRC = ft_exit.c
+_SRC = 	ft_free.c \
+		ft_getenv.c \
+		ft_is_whitespace.c \
+		ft_itoa_base.c \
+		ft_itoa_float.c \
+		ft_itoa_hexa.c \
+		ft_itoa_uint.c \
+		get_next_line.c \
+		print_error_and_exit.c \
+		print_error.c \
 
 _OBJ = $(_SRC:.c=.o)
-_INC = ft_exit.h
+_INC = misc.h
 
 SRC_DIR = .
 OBJ_DIR = ../objs
@@ -35,7 +44,7 @@ DEBUG_FLAGS = -Wall -Wextra -Werror -g -I $(INC_DIR) $(INC_LIBFT)
 all: $(OBJ_DIR) $(NAME)
 
 $(NAME): $(OBJ)
-	@echo "\n"ft_exit objects done."\n"
+	@echo "\n"libft misc objects done."\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
 	@printf "|"

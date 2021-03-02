@@ -6,7 +6,7 @@
 #    By: helvi <helvi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/22 11:40:36 by helvi             #+#    #+#              #
-#    Updated: 2021/02/23 15:34:43 by helvi            ###   ########.fr        #
+#    Updated: 2021/02/25 12:44:15 by helvi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ $(NAME): $(OBJ)
 	@echo "\n"ft_error objects done."\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
-	@echo -n "|"
+	@printf "|"
 	@$(CC) $(DEBUG_FLAGS) -c -o $@ $<
 
 $(OBJ_DIR):

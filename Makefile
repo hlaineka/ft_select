@@ -6,7 +6,7 @@
 #    By: helvi <helvi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/17 12:00:35 by hlaineka          #+#    #+#              #
-#    Updated: 2021/02/20 14:03:19 by helvi            ###   ########.fr        #
+#    Updated: 2021/03/01 18:57:08 by helvi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,12 @@ CC = gcc
 
 NAME = ft_select
 
-_SRC = 	ft_select.c
+_SRC = 	ft_select.c \
+		rawmode.c \
+		print.c \
+		cursor.c \
+		read.c \
+		helpers.c
 
 _OBJ = $(_SRC:.c=.o)
 _INC = ft_select.h
@@ -31,8 +36,9 @@ INC = $(patsubst %,$(INC_DIR)/%,$(_INC))
 LIBFT = $(patsubst %,$(LIBFT_DIR)/%,$(_LIBFT))
 
 INC_LIBFT = -I libft/includes
+INC_TERMCAPS = -ltermcap
 
-FLAGS = -Wall -Wextra -Werror -I $(INC_DIR) $(INC_LIBFT)
+FLAGS = -Wall -Wextra -Werror -I $(INC_DIR) $(INC_LIBFT) $(INC_TERMCAPS)
 DEBUG_FLAGS = -Wall -Wextra -Werror -g -I $(INC_DIR) $(INC_LIBFT)
 
 all: $(OBJ_DIR) $(NAME)
@@ -51,7 +57,7 @@ debug: $(OBJ_DIR) $(OBJ)
 	@echo minishell compiled with -g.
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
-	@echo -n "|"
+	@printf "|"
 	@$(CC) $(DEBUG_FLAGS) -c -o $@ $<
 
 $(OBJ_DIR):

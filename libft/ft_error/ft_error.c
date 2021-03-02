@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/02 12:14:06 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/24 12:42:28 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/01 12:11:29 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 ** error number as an index. Added index 40, "Unknown error"
 */
 
-int	g_ft_errno = 0;
+int			g_ft_errno = 0;
+char		*g_program_name = NULL;
 
 static char	*g_errstrs[] =
 {
@@ -172,14 +173,14 @@ void	ft_perror(const char *message)
 	ft_printf("%r\r\n", g_errstrs[g_ft_errno]);
 }
 
-void	ft_error(int status, int errnum, char *prog_name,
-		const char *format, ...)
+void	ft_error(int status, int errnum, const char *format, ...)
 {
 	va_list source;
 
+	g_program_name = "ft_select";
 	va_start(source, format);
-	if (prog_name && prog_name[0] != '\0')
-		ft_printf("%r%s: ", prog_name);
+	if (g_program_name && g_program_name[0] != '\0')
+		ft_printf("%r%s: ", g_program_name);
 	if (errnum)
 		ft_printf("%r%s: ", g_errstrs[g_ft_errno]);
 	printer(format, &source);

@@ -6,7 +6,7 @@
 #    By: helvi <helvi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/02/24 15:52:44 by helvi             #+#    #+#              #
-#    Updated: 2021/02/24 15:55:32 by helvi            ###   ########.fr        #
+#    Updated: 2021/02/25 14:06:08 by helvi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ _SRC = 	ft_lst_length.c \
 		ft_lstend.c
 
 _OBJ = $(_SRC:.c=.o)
-_INC = ft_lists.h
+_INC = lists.h
 
 SRC_DIR = .
 OBJ_DIR = ../objs
@@ -45,7 +45,7 @@ $(NAME): $(OBJ)
 	@echo "\n"libft lists objects done."\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC)
-	@echo -n "|"
+	@printf "|"
 	@$(CC) $(DEBUG_FLAGS) -c -o $@ $<
 
 $(OBJ_DIR):
