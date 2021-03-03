@@ -6,11 +6,13 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 11:59:24 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/02 21:06:11 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/03 10:51:26 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+extern t_terminal *g_info;
 
 void		print_one(t_option *printable, t_terminal *info)
 {

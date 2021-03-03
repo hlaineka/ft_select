@@ -6,11 +6,13 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:20:01 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/02 21:24:32 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/03 19:13:11 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+extern t_terminal *g_info;
 
 int			read_esc(t_terminal *info, int c)
 {
@@ -43,7 +45,7 @@ int			process_keypress(t_terminal *info)
 
 	returnable = 0;
 	c = 0;
-	read(0, &c, 1);
+	read(info->fd_in, &c, 1);
 	if (c == 27)
 		returnable = read_esc(info, c);
 	else
@@ -160,7 +162,10 @@ int			handle_delete(t_terminal *info, t_option **first)
 			temp->next->prev = temp->prev;
 			temp->next->cursor = TRUE;
 			if (temp == *first)
+			{
 				*first = temp->next;
+				g_info->first = temp->next;
+			}
 			free_option(temp);
 			return (1);
 		}
@@ -171,7 +176,7 @@ int			handle_delete(t_terminal *info, t_option **first)
 	return (0);
 }
 
-int			handle_char(t_terminal *info, t_option **first)
+int			read_char(t_terminal *info, t_option **first)
 {
 	int		c;
 
@@ -189,7 +194,7 @@ int			handle_char(t_terminal *info, t_option **first)
 		return (handle_return(info, *first));
 	if (c == 32)
 		return (handle_space(*first));
-	if (c == 127)
+	if (c == 127) //add delete also! It is 4 characters
 		return (handle_delete(info, first));
 	return (0);
 }

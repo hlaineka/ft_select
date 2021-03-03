@@ -6,13 +6,14 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:22 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/02 15:32:26 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/03 19:12:26 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+t_terminal *g_info;
 
-t_option	*create_list(char **argv)
+static t_option	*create_list(char **argv)
 {
 	int			i;
 	t_option	*temp_prev;
@@ -41,7 +42,7 @@ t_option	*create_list(char **argv)
 	return(first);
 }
 
-void		selector(t_terminal *info, char **argv)
+static void		selector(t_terminal *info, char **argv)
 {
 	t_option	*first;
 
@@ -49,10 +50,11 @@ void		selector(t_terminal *info, char **argv)
 		return;
 	first = create_list(argv);
 	first->cursor = TRUE;
+	info->first = first;
 	print_selections(info, first);
 	while (true)
 	{
-		if (1 == handle_char(info, &first))
+		if (1 == read_char(info, &first))
 			print_selections(info, first);
 	}
 }
@@ -64,6 +66,8 @@ int			main(int argc, char **argv, char **envp)
 	if (NULL == (info = (t_terminal*)malloc(sizeof(t_terminal))))
 		die("malloc");
 	ft_bzero(info, sizeof(t_terminal));
+	g_info = info;
+	start_signal();
 	enable_rawmode(info, envp);
 	check_window_size(info);
 	if (argc > 1)

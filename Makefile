@@ -6,7 +6,7 @@
 #    By: helvi <helvi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/17 12:00:35 by hlaineka          #+#    #+#              #
-#    Updated: 2021/03/01 18:57:08 by helvi            ###   ########.fr        #
+#    Updated: 2021/03/03 19:11:19 by helvi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ _SRC = 	ft_select.c \
 		print.c \
 		cursor.c \
 		read.c \
-		helpers.c
+		read_handlers.c \
+		helpers.c \
+		signal.c
 
 _OBJ = $(_SRC:.c=.o)
 _INC = ft_select.h

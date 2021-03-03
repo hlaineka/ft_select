@@ -6,13 +6,13 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:27:50 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/02 21:23:48 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/03 19:08:51 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int g_fd_out;
-
 #include "ft_select.h"
+
+extern t_terminal *g_info;
 char	PC;
 char	*BC;
 char	*UP;
@@ -59,32 +59,21 @@ void	start_termcaps(t_terminal *info, char **envp)
 	info->me_string = tgetstr("me", NULL);
 	info->mr_string = tgetstr("mr", NULL);
 	set_globals();
-	tputs(info->sc_string, 1, &ft_putc);
+	tputs(info->sc_string, 1, &ft_putc); //
 }
-
-//char		*check_utmp()
-//{
-//	char	*returnable;
-
-//	returnable = NULL;
-//	if ()
-//}
 
 void		check_tty(t_terminal *info)
 {
 	if (!isatty(1))
-	{
-		info->fd_out = open(ttyname(ttyslot()), O_RDWR);
-		g_fd_out = info->fd_out;
-	}
+		info->fd_out = open(ttyname(ttyslot()), O_WRONLY);
 	else
 		info->fd_out = 1;
 	if (!isatty(0))
 	{
-		info->fd_in = open(ttyname(ttyslot()), O_RDWR);
+		info->fd_in = open(ttyname(ttyslot()), O_RDONLY);
 	}
 	else
-		info->fd_in = 1;
+		info->fd_in = 0;
 }
 
 /*
@@ -119,7 +108,7 @@ int		enable_rawmode(t_terminal *info, char **envp)
 	if (tcgetattr(STDIN_FILENO, info->original_termios) == -1 ||
 		tcgetattr(STDIN_FILENO, info->termios) == -1)
 		die("tcgetattr");
-	info->termios->c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+	info->termios->c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	info->termios->c_iflag &= ~(BRKINT | INPCK | ISTRIP | IXON | ICRNL);
 	info->termios->c_oflag &= ~(OPOST);
 	info->termios->c_cflag |= (CS8);
