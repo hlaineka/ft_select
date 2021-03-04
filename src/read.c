@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:20:01 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 17:34:10 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 17:59:13 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int			read_esc(t_terminal *info, int c)
 	struct termios	*temp;
 	int				i;
 	char			c2[3];
-	int				multiplier;
+	int				int_length;
 
 	ft_bzero(c2, 3);
 	i = 0;
-	multiplier = 1;
+	int_length = 0;;
 	temp = (struct termios*)malloc(sizeof(struct termios));
 	ft_memcpy(temp, info->termios, sizeof(struct termios));
 	temp->c_cc[VTIME] = 0;
@@ -32,13 +32,10 @@ int			read_esc(t_terminal *info, int c)
 	read(0, c2, 3);
 	while (i < 3 && c2[i] != 0)
 	{
-		if (ft_define_length((int)c2[i]) == 1)
-			multiplier = 10;
-		if (ft_define_length((int)c2[i]) == 2)
-			multiplier = 100;
-		if (ft_define_length((int)c2[i]) == 3)
-			multiplier = 1000;
-		c = c * multiplier + (int)c2[i];
+		int_length = ft_define_length((int)c2[i]);
+		while (int_length-- > 0)
+			c = c * 10;
+		c = c + (int)c2[i];
 		i++;
 	}
 	tcsetattr(info->fd_out, TCSANOW, info->termios);
@@ -46,7 +43,7 @@ int			read_esc(t_terminal *info, int c)
 	return (c);
 }
 
-int	process_keypress(t_terminal *info)
+int			process_keypress(t_terminal *info)
 {
 	long int	returnable;
 	int			c;
@@ -107,7 +104,7 @@ int			read_char(t_terminal *info, t_option **first)
 		return (handle_return(info, *first));
 	if (c == 32)
 		return (handle_space(*first));
-	if (c == 127 || c == DELETE) //add delete also! It is 4 characters
+	if (c == 127 || c == DELETE)
 		return (handle_delete(info, first));
 	return (0);
 }
