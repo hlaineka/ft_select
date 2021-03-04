@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:20:01 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 12:54:09 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 17:05:00 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,24 @@ extern t_terminal *g_info;
 int			read_esc(t_terminal *info, int c)
 {
 	struct termios	*temp;
-	int				c2;
-	int				c3;
-	int				returnable;
+	int				i;
+	char			c2[3];
 
-	c2 = 0;
-	c3 = 0;
+	ft_bzero(c2, 3);
 	temp = (struct termios*)malloc(sizeof(struct termios));
 	ft_memcpy(temp, info->termios, sizeof(struct termios));
-	temp->c_cc[VTIME] = 0;
+	temp->c_cc[VTIME] = 1;
 	temp->c_cc[VMIN] = 0;
 	tcsetattr(info->fd_out, TCSANOW, temp);
-	read(0, &c2, 1);
-	read(0, &c3, 1);
-	if (!c2 || !c3)
-		return c;
-	returnable = c * 10000 + c2 * 100 + c3;
+	read(0, c2, 3);
+	while (i < 3 && c2[i] != 0)
+	{
+		c = c * 10 * ft_define_length(c2[i]) + (c2[i] - '0');
+		i++;
+	}
 	tcsetattr(info->fd_out, TCSANOW, info->termios);
 	ft_free(temp);
-	return (returnable);
+	return (c);
 }
 
 int	process_keypress(t_terminal *info)
