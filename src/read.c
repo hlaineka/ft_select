@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:20:01 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 12:22:48 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 12:32:08 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_terminal *g_info;
 
-long int	read_esc(t_terminal *info, int c)
+int	read_esc(t_terminal *info, int c)
 {
 	struct termios	*temp;
 	int		c2;
@@ -42,7 +42,7 @@ long int	read_esc(t_terminal *info, int c)
 	return (c);
 }
 
-long int	process_keypress(t_terminal *info)
+int	process_keypress(t_terminal *info)
 {
 	long int	returnable;
 	int			c;
