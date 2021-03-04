@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:20:01 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 12:32:08 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 12:54:09 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,28 @@
 
 extern t_terminal *g_info;
 
-int	read_esc(t_terminal *info, int c)
+int			read_esc(t_terminal *info, int c)
 {
 	struct termios	*temp;
-	int		c2;
+	int				c2;
+	int				c3;
+	int				returnable;
 
 	c2 = 0;
+	c3 = 0;
 	temp = (struct termios*)malloc(sizeof(struct termios));
 	ft_memcpy(temp, info->termios, sizeof(struct termios));
 	temp->c_cc[VTIME] = 0;
 	temp->c_cc[VMIN] = 0;
 	tcsetattr(info->fd_out, TCSANOW, temp);
-	if (1 == (read(0, &c2, 1)))
-	{
-		c = (c << ft_define_length(c2)) + c2;
-		c2 = 0;
-	}
-	if (1 == (read(0, &c2, 1)))
-	{
-		c = (c << ft_define_length(c2)) + c2;
-		c2 = 0;
-	}
-	if (1 == (read(0, &c2, 1)))
-		c = (c << ft_define_length(c2)) + c2;
+	read(0, &c2, 1);
+	read(0, &c3, 1);
+	if (!c2 || !c3)
+		return c;
+	returnable = c * 10000 + c2 * 100 + c3;
 	tcsetattr(info->fd_out, TCSANOW, info->termios);
 	ft_free(temp);
-	return (c);
+	return (returnable);
 }
 
 int	process_keypress(t_terminal *info)
