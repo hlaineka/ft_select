@@ -6,13 +6,14 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:22 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 12:30:12 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 16:59:00 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
 struct termios		*g_termios;
+struct termios		*g_original_termios;
 
 /*
 ** ECHO disables automatic printing of a character
@@ -44,7 +45,7 @@ int		enable_rawmode()
 	if (tcgetattr(STDIN_FILENO, g_original_termios) == -1 ||
 		tcgetattr(STDIN_FILENO, &raw) == -1)
 		die("tcgetattr");
-	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN | ISIG);
+	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	raw.c_iflag &= ~(BRKINT | INPCK | ISTRIP | IXON | ICRNL);
 	raw.c_oflag &= ~(OPOST);
 	raw.c_cflag |= (CS8);
@@ -64,34 +65,30 @@ int		disable_rawmode()
 int	read_esc(int c)
 {
 	struct termios	*temp;
-	int		c2;
+	int				c2[3];
+	int				i;
 
-	c2 = 0;
+	bzero(c2, 3);
+	i = 0;
 	temp = (struct termios*)malloc(sizeof(struct termios));
-	ft_memcpy(temp, g_termios, sizeof(struct termios));
+	temp = ft_memcpy(temp, g_termios, sizeof(struct termios));
 	temp->c_cc[VTIME] = 0;
 	temp->c_cc[VMIN] = 0;
-	tcsetattr(1, TCSANOW, temp);
-	if (1 == (read(0, &c2, 1)))
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, temp);
+	read(0, c2, 3);
+	while (i < 3 && c2[i] != 0)
 	{
-		c = (c << ft_define_length(c2)) + c2;
-		c2 = 0;
+		c = c * 10 * ft_define_length(c2[i]) + c2[i];
+		i++;
 	}
-	if (1 == (read(0, &c2, 1)))
-	{
-		c = (c << ft_define_length(c2)) + c2;
-		c2 = 0;
-	}
-	if (1 == (read(0, &c2, 1)))
-		c = (c << ft_define_length(c2)) + c2;
-	tcsetattr(1, TCSANOW, g_termios);
+	tcsetattr(STDERR_FILENO, TCSAFLUSH, g_termios);
 	ft_free(temp);
 	return (c);
 }
 
 int	process_keypress()
 {
-	long int	returnable;
+	int	returnable;
 	int			c;
 
 	returnable = 0;
@@ -114,16 +111,15 @@ int			read_char()
 		disable_rawmode();
 		ft_exit(0);
 	}
-	ft_printf("%i", c);
+	ft_printf("%i ", c);
 	return (0);
 }
 
 int		main(void)
 {
 	t_select	*info;
+	int			c;
 	int			i;
-	char		c;
-
 	if (NULL == (info = (t_select*)malloc(sizeof(t_select))))
 		die("malloc");
 	ft_bzero(info, sizeof(t_select));

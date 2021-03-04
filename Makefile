@@ -6,13 +6,13 @@
 #    By: helvi <helvi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/17 12:00:35 by hlaineka          #+#    #+#              #
-#    Updated: 2021/02/20 14:03:19 by helvi            ###   ########.fr        #
+#    Updated: 2021/03/04 13:28:22 by helvi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-NAME = ft_select
+NAME = tester
 
 _SRC = 	ft_select.c
 

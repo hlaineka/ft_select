@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:57:04 by helvi             #+#    #+#             */
-/*   Updated: 2021/02/23 15:12:58 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 13:36:51 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 ** Global variables needed by the ft_exit.
 */
 
-struct termios	*g_original_termios;
+extern struct termios	*g_original_termios;
 
 typedef	struct 		s_select
 {
