@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 10:00:31 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/03 22:28:06 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:32:05 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	sigcont_handler(int signo)
 	if (signo == SIGCONT)
 	{
 		check_tty(g_info);
-		if (tcsetattr(g_info->fd_out, TCSANOW, g_info->termios) == -1)
+		if (tcsetattr(g_info->fd_out, TCSAFLUSH, g_info->termios) == -1)
 		{
 			disable_rawmode(g_info);
 			die("tcsetattr");

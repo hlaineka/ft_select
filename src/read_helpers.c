@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 19:20:58 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/03 19:22:34 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 19:45:21 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			handle_return(t_terminal *info, t_option *first)
 		temp = temp->next;
 		if (temp == first)
 		{
-			ft_putstr_fd("\r\n", STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
 			ft_exit(0);
 		}
 	}

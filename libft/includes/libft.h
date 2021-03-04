@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 11:58:27 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/02/25 12:40:18 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 19:46:07 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct		s_list
 
 # include "ft_printf.h"
 # include "ft_exit.h"
-# include "error.h"
+# include "ft_error.h"
 # include "lists.h"
 # include "misc.h"
 # include "strings.h"
