@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:57:04 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 12:58:04 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:13:20 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <term.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <error.h>
 # include "libft.h"
 
 # define ARROW_UP 279165
