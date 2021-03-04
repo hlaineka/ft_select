@@ -6,11 +6,13 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:22 by helvi             #+#    #+#             */
-/*   Updated: 2021/02/23 16:03:16 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 12:30:12 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
+struct termios		*g_termios;
 
 /*
 ** ECHO disables automatic printing of a character
@@ -48,6 +50,7 @@ int		enable_rawmode()
 	raw.c_cflag |= (CS8);
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &raw) == -1)
 		die("tcsetattr");
+	g_termios = &raw;
 	return (1);
 }
 
@@ -56,6 +59,63 @@ int		disable_rawmode()
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, g_original_termios) == -1)
 		die("tcsetattr");
 	return (1);
+}
+
+int	read_esc(int c)
+{
+	struct termios	*temp;
+	int		c2;
+
+	c2 = 0;
+	temp = (struct termios*)malloc(sizeof(struct termios));
+	ft_memcpy(temp, g_termios, sizeof(struct termios));
+	temp->c_cc[VTIME] = 0;
+	temp->c_cc[VMIN] = 0;
+	tcsetattr(1, TCSANOW, temp);
+	if (1 == (read(0, &c2, 1)))
+	{
+		c = (c << ft_define_length(c2)) + c2;
+		c2 = 0;
+	}
+	if (1 == (read(0, &c2, 1)))
+	{
+		c = (c << ft_define_length(c2)) + c2;
+		c2 = 0;
+	}
+	if (1 == (read(0, &c2, 1)))
+		c = (c << ft_define_length(c2)) + c2;
+	tcsetattr(1, TCSANOW, g_termios);
+	ft_free(temp);
+	return (c);
+}
+
+int	process_keypress()
+{
+	long int	returnable;
+	int			c;
+
+	returnable = 0;
+	c = 0;
+	read(0, &c, 1);
+	if (c == 27)
+		returnable = read_esc(c);
+	else
+		returnable = c;
+	return (returnable);
+}
+
+int			read_char()
+{
+	int		c;
+
+	c = process_keypress();
+	if (c == 27)
+	{
+		disable_rawmode();
+		ft_exit(0);
+	}
+	ft_printf("%i", c);
+	return (0);
 }
 
 int		main(void)
