@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:22 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 16:59:00 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 18:10:13 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,31 @@ int		disable_rawmode()
 int	read_esc(int c)
 {
 	struct termios	*temp;
-	int				c2[3];
+	char			c2[3];
 	int				i;
+	int				int_length;
 
 	bzero(c2, 3);
 	i = 0;
+	int_length = 1;
 	temp = (struct termios*)malloc(sizeof(struct termios));
-	temp = ft_memcpy(temp, g_termios, sizeof(struct termios));
+	ft_memcpy(temp, g_termios, sizeof(struct termios));
 	temp->c_cc[VTIME] = 0;
 	temp->c_cc[VMIN] = 0;
-	tcsetattr(STDERR_FILENO, TCSAFLUSH, temp);
+	tcsetattr(STDERR_FILENO, TCSANOW, temp);
 	read(0, c2, 3);
 	while (i < 3 && c2[i] != 0)
 	{
-		c = c * 10 * ft_define_length(c2[i]) + c2[i];
+		int_length = ft_define_length((int)c2[i]);
+		while (int_length-- > 0)
+		{
+			c = c * 10;
+			ft_printf("-%i- ", c);
+		}
+		c = c + (int)c2[i];
 		i++;
 	}
-	tcsetattr(STDERR_FILENO, TCSAFLUSH, g_termios);
+	tcsetattr(STDERR_FILENO, TCSANOW, g_termios);
 	ft_free(temp);
 	return (c);
 }
@@ -106,20 +114,14 @@ int			read_char()
 	int		c;
 
 	c = process_keypress();
-	if (c == 27)
-	{
-		disable_rawmode();
-		ft_exit(0);
-	}
-	ft_printf("%i ", c);
-	return (0);
+	return (c);
 }
 
 int		main(void)
 {
 	t_select	*info;
-	int			c;
 	int			i;
+	
 	if (NULL == (info = (t_select*)malloc(sizeof(t_select))))
 		die("malloc");
 	ft_bzero(info, sizeof(t_select));
@@ -128,8 +130,7 @@ int		main(void)
 	i = 0;
 	while (i != 113)
 	{
-		read(STDIN_FILENO, &c, 1);
-		i = (int)c;
+		i = read_char();
 		ft_printf("%i ", i);
 	}
 	ft_exit(0);
