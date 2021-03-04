@@ -6,26 +6,13 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:27:50 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/03 19:08:51 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/03 22:36:14 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
 extern t_terminal *g_info;
-char	PC;
-char	*BC;
-char	*UP;
-
-void	set_globals(void)
-{
-	char	*temp;
-
-	temp = tgetstr ("pc", NULL);
-  	PC = temp ? *temp : 0;
-  	BC = tgetstr ("le", NULL);
-  	UP = tgetstr ("up", NULL);
-}
 
 void	start_termcaps(t_terminal *info, char **envp)
 {
@@ -58,8 +45,6 @@ void	start_termcaps(t_terminal *info, char **envp)
 	info->us_string = tgetstr("us", NULL);
 	info->me_string = tgetstr("me", NULL);
 	info->mr_string = tgetstr("mr", NULL);
-	set_globals();
-	tputs(info->sc_string, 1, &ft_putc); //
 }
 
 void		check_tty(t_terminal *info)

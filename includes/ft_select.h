@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:57:04 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/03 19:16:29 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/03 22:40:34 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,21 @@ void				print_mv_cursor(char *printable, t_terminal *info);
 */
 
 int					read_char(t_terminal *info, t_option **first);
+
+/*
+** read_helpers.c
+*/
+
+int					handle_space(t_option *first);
+int					handle_return(t_terminal *info, t_option *first);
+void				free_option(t_option *to_free);
+
+/*
+**arrows.c
+*/
+
+int					handle_left(t_option *first);
+int					handle_right(t_option *first);
 
 /*
 ** helpers.c

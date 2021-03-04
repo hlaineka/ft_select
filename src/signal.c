@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 10:00:31 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/03 18:53:50 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/03 22:28:06 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,11 @@ void	sigtstp_handler(int signo)
 {
 	if (signo == SIGTSTP)
 	{
-		disable_rawmode(g_info);
+		if (tcsetattr(g_info->fd_out, TCSAFLUSH, g_info->original_termios) == -1)
+			die("tcsetattr");
 		signal(SIGTSTP, SIG_DFL);
 		ioctl(STDERR_FILENO, TIOCSTI, "\x1A");
+		tputs(g_info->te_string, g_info->screenrows, &ft_putc);
 	}
 }
 

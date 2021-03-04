@@ -6,13 +6,13 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/26 12:03:43 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/02 21:05:41 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/03 19:24:11 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
 
-void		save_cursor_position(t_option *node, t_terminal *info)
+void	save_cursor_position(t_option *node, t_terminal *info)
 {
 	node->cursorcol = info->cursorcol;
 	node->cursorrow = info->cursorrow;
@@ -53,8 +53,9 @@ void	move_cursor(t_option *first, t_terminal *info)
 	{
 		if (temp->cursor)
 		{
-			tputs(tgoto(info->cm_string, temp->cursorcol, temp->cursorrow), (info->screenrows - temp->cursorrow), &ft_putc);
-			break;
+			tputs(tgoto(info->cm_string, temp->cursorcol, temp->cursorrow),
+				(info->screenrows - temp->cursorrow), &ft_putc);
+			break ;
 		}
 		temp = temp->next;
 	}
