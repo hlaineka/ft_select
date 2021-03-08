@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 12:20:01 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 17:59:13 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 20:02:26 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			read_esc(t_terminal *info, int c)
 
 	ft_bzero(c2, 3);
 	i = 0;
-	int_length = 0;;
+	int_length = 0;
 	temp = (struct termios*)malloc(sizeof(struct termios));
 	ft_memcpy(temp, info->termios, sizeof(struct termios));
 	temp->c_cc[VTIME] = 0;

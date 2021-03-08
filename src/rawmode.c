@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 16:27:50 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 18:33:27 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/05 11:27:55 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,8 @@
 
 extern t_terminal *g_info;
 
-void	start_termcaps(t_terminal *info, char **envp)
+void	save_termstrs(t_terminal *info)
 {
-	char		*term_type;
-	int			success;
-
-	if (NULL == (term_type = ft_getenv(envp, "TERM")))
-	{
-		disable_rawmode(info);
-		die("Terminal type not specified in $TERM");
-	}
-	success = tgetent (info->term_buffer, term_type);
-  	if (success < 0)
-	{
-		disable_rawmode(info);
-		die("Could not access the termcap data base.");
-	}
-  	if (success == 0)
-	{
-		disable_rawmode(info);
-		die("Terminal type $TERM not defined");
-	}
 	info->cm_string = tgetstr("cm", NULL);
 	info->cl_string = tgetstr("cl", NULL);
 	info->cd_string = tgetstr("cd", NULL);
@@ -47,7 +28,32 @@ void	start_termcaps(t_terminal *info, char **envp)
 	info->mr_string = tgetstr("mr", NULL);
 }
 
-void		check_tty(t_terminal *info)
+void	start_termcaps(t_terminal *info, char **envp)
+{
+	char		*term_type;
+	int			success;
+
+	if (NULL == (term_type = ft_getenv(envp, "TERM")))
+	{
+		disable_rawmode(info);
+		die("Terminal type not specified in $TERM");
+	}
+	success = tgetent(info->term_buffer, term_type);
+	if (success < 0)
+	{
+		disable_rawmode(info);
+		die("Could not access the termcap data base.");
+	}
+	if (success == 0)
+	{
+		disable_rawmode(info);
+		die("Terminal type $TERM not defined");
+	}
+	save_termstrs(info);
+	ft_free(term_type);
+}
+
+void	check_tty(t_terminal *info)
 {
 	if (!isatty(1))
 		info->fd_out = open(ttyname(ttyslot()), O_WRONLY);
@@ -84,11 +90,11 @@ void		check_tty(t_terminal *info)
 int		enable_rawmode(t_terminal *info, char **envp)
 {
 	check_tty(info);
-	if (NULL == (info->original_termios = (struct termios*)malloc(sizeof(
-		struct termios))))
+	if (NULL == (info->original_termios = (struct termios*)
+		malloc(sizeof(struct termios))))
 		die("malloc");
-	if (NULL == (info->termios = (struct termios*)malloc(sizeof(
-		struct termios))))
+	if (NULL == (info->termios = (struct termios*)
+		malloc(sizeof(struct termios))))
 		die("malloc");
 	if (tcgetattr(STDIN_FILENO, info->original_termios) == -1 ||
 		tcgetattr(STDIN_FILENO, info->termios) == -1)
@@ -114,29 +120,4 @@ int		disable_rawmode(t_terminal *info)
 	if (tcsetattr(info->fd_out, TCSAFLUSH, info->original_termios) == -1)
 		die("tcsetattr");
 	return (1);
-}
-
-/*
-** Checks and saves to info structure the size of the window.
-*/
-
-void		check_window_size(t_terminal *info)
-{
-	struct winsize	window_size;
-
-	ioctl(info->fd_out, TIOCGWINSZ, &window_size);
-	info->screenrows = window_size.ws_row;
-	info->screencols = window_size.ws_col;
-}
-
-
-/*
-** Function to clear the screen before options are printed. The cursor
-** location was saved when the program started, and now we use it as the
-** starting location.
-*/
-
-void	ft_clear_screen(t_terminal *info)
-{
-	tputs(info->cl_string, info->screenrows, &ft_putc);
 }

@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:57:04 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 19:53:34 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/05 09:15:35 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define ARROW_LEFT 279168
 # define DELETE 279151126
 
-typedef struct 		s_option
+typedef struct		s_option
 {
 	char			*name;
 	bool			selected;
@@ -40,7 +40,7 @@ typedef struct 		s_option
 
 }					t_option;
 
-typedef struct 		s_terminal
+typedef struct		s_terminal
 {
 	struct termios	*original_termios;
 	struct termios	*termios;
@@ -63,7 +63,7 @@ typedef struct 		s_terminal
 	int				cursor_saved_col;
 	int				fd_out;
 	int				fd_in;
-	t_option	*first;
+	t_option		*first;
 }					t_terminal;
 
 extern t_terminal *g_info;

@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/29 10:28:47 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/03/04 12:20:02 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 20:26:18 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_define_length(int n)
 {
 	int i;
 
-	i = 0;
+	i = 1;
 	if (n == T_INT_MIN)
 	{
 		i = i + 2;
@@ -31,7 +31,7 @@ int	ft_define_length(int n)
 		i++;
 		n = n * (-1);
 	}
-	while (n > 1)
+	while (n > 9)
 	{
 		i++;
 		n = n / 10;

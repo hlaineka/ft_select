@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 10:00:31 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/04 18:32:05 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 20:38:09 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	signwinch_handler(int signo)
 	}
 }
 
-void	sigint_handler(int signo)
+void	sig_handler(int signo)
 {
-	if (signo ==  SIGINT)
+	if (signo)
 	{
 		disable_rawmode(g_info);
 		ft_exit(0);
@@ -53,7 +53,8 @@ void	sigtstp_handler(int signo)
 {
 	if (signo == SIGTSTP)
 	{
-		if (tcsetattr(g_info->fd_out, TCSAFLUSH, g_info->original_termios) == -1)
+		if (tcsetattr(g_info->fd_out, TCSAFLUSH, g_info->original_termios)
+			== -1)
 			die("tcsetattr");
 		signal(SIGTSTP, SIG_DFL);
 		ioctl(STDERR_FILENO, TIOCSTI, "\x1A");
@@ -63,8 +64,20 @@ void	sigtstp_handler(int signo)
 
 void	start_signal(void)
 {
-	signal(SIGWINCH, signwinch_handler);
-	signal(SIGINT, sigint_handler);
-	signal(SIGTSTP, sigtstp_handler);
-	signal(SIGCONT, sigcont_handler);
+	if ((signal(SIGWINCH, signwinch_handler) == SIG_ERR) ||
+		(signal(SIGTSTP, sigtstp_handler) == SIG_ERR) ||
+		(signal(SIGCONT, sigcont_handler) == SIG_ERR) ||
+		(signal(SIGINT, sig_handler) == SIG_ERR) ||
+		(signal(SIGQUIT, sig_handler) == SIG_ERR) ||
+		(signal(SIGHUP, sig_handler) == SIG_ERR) ||
+		(signal(SIGPIPE, sig_handler) == SIG_ERR) ||
+		(signal(SIGALRM, sig_handler) == SIG_ERR) ||
+		(signal(SIGXCPU, sig_handler) == SIG_ERR) ||
+		(signal(SIGXFSZ, sig_handler) == SIG_ERR) ||
+		(signal(SIGVTALRM, sig_handler) == SIG_ERR) ||
+		(signal(SIGPROF, sig_handler) == SIG_ERR))
+	{
+		disable_rawmode(g_info);
+		ft_exit(0);
+	}
 }

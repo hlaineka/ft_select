@@ -6,7 +6,7 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 11:58:27 by hlaineka          #+#    #+#             */
-/*   Updated: 2021/03/04 19:52:58 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/05 09:01:29 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdint.h>
-# define T_INT_MAX 2147483647
-# define T_INT_MIN -2147483648
-# define BUFF_SIZE 8
-# define FD_LIMIT 4864
-# define TRUE 1
-# define FALSE 0
-
-typedef struct		s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-
-}					t_list;
-
 # include "ft_printf.h"
 # include "ft_exit.h"
 # include "ft_error.h"
@@ -38,6 +23,12 @@ typedef struct		s_list
 # include "misc.h"
 # include "strings.h"
 # include "stringarrays.h"
+# define T_INT_MAX 2147483647
+# define T_INT_MIN -2147483648
+# define BUFF_SIZE 8
+# define FD_LIMIT 4864
+# define TRUE 1
+# define FALSE 0
 
 /*
 ** Basic functions
@@ -92,20 +83,6 @@ char				*ft_strtrim(const char *s);
 char				**ft_strsplit(const char *s, char c);
 
 /*
-** List functions
-*/
-t_list				*ft_lstnew(const void *content, size_t content_size);
-void				ft_lstdelone(t_list **alst, void (*del)(void*, size_t));
-void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void				ft_lstadd(t_list **alst, t_list *new_list);
-void				ft_lstiter(t_list *lst, void (*f)(t_list*elem));
-t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-t_list				*ft_lstsrc(const void *content, t_list *beginning);
-void				ft_lstnewtoend(const void *content, size_t content_size,
-					t_list **beginning);
-void				ft_lstaddafter(t_list *end, t_list *newelem);
-
-/*
 ** Own adds.
 */
 
@@ -113,6 +90,5 @@ int					ft_define_length(int n);
 char				*ft_strset(char value, size_t num);
 char				*ft_strnchr(const char *src, int c);
 int					ft_iscntrl(int c);
-
 
 #endif

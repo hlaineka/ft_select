@@ -6,7 +6,7 @@
 #    By: helvi <helvi@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/10/17 12:00:35 by hlaineka          #+#    #+#              #
-#    Updated: 2021/03/03 19:21:24 by helvi            ###   ########.fr        #
+#    Updated: 2021/03/05 11:56:35 by helvi            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ LIBFT = $(patsubst %,$(LIBFT_DIR)/%,$(_LIBFT))
 INC_LIBFT = -I libft/includes
 INC_TERMCAPS = -ltermcap
 
-FLAGS = -Wall -Wextra -Werror -I $(INC_DIR) $(INC_LIBFT) $(INC_TERMCAPS)
+FLAGS = -Wall -Wextra -Werror -g -I $(INC_DIR) $(INC_LIBFT) $(INC_TERMCAPS)
 DEBUG_FLAGS = -Wall -Wextra -Werror -g -I $(INC_DIR) $(INC_LIBFT)
 
 all: $(OBJ_DIR) $(NAME)

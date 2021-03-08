@@ -6,11 +6,12 @@
 /*   By: helvi <helvi@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/20 13:59:22 by helvi             #+#    #+#             */
-/*   Updated: 2021/03/03 19:12:26 by helvi            ###   ########.fr       */
+/*   Updated: 2021/03/04 20:39:57 by helvi            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_select.h"
+
 t_terminal *g_info;
 
 static t_option	*create_list(char **argv)
@@ -39,7 +40,7 @@ static t_option	*create_list(char **argv)
 	}
 	temp_prev->next = first;
 	first->prev = temp_prev;
-	return(first);
+	return (first);
 }
 
 static void		selector(t_terminal *info, char **argv)
@@ -47,7 +48,7 @@ static void		selector(t_terminal *info, char **argv)
 	t_option	*first;
 
 	if (!info)
-		return;
+		return ;
 	first = create_list(argv);
 	first->cursor = TRUE;
 	info->first = first;
@@ -59,7 +60,7 @@ static void		selector(t_terminal *info, char **argv)
 	}
 }
 
-int			main(int argc, char **argv, char **envp)
+int				main(int argc, char **argv, char **envp)
 {
 	t_terminal	*info;
 
