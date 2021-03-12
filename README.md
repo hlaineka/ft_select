@@ -10,4 +10,4 @@ A program that creates a selection list using termcaps.
 
 ![Alt text](images/resize.gif)
 
-![Alt text](suspend/rm.gif)
+![Alt text](images/suspend.gif)
