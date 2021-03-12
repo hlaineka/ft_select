@@ -4,6 +4,7 @@
 
 
 A program that creates a selection list using termcaps.
+Read the full subject of this project [here.](ft_select.en.pdf)
 
 
 ![Alt text](images/rm.gif)
