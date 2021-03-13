@@ -4,8 +4,7 @@
 
 To run the project, download it and build with `make`.
 The project needs curses.h and term.h and the libraries for
-those. On debian you can install the dependencies with
-`sudo apt install libncurses-dev libncurses6`
+those.
 
 A program that creates a selection list using termcaps.
 
